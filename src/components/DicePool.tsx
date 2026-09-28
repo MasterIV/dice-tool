@@ -17,9 +17,9 @@ function DieSelector({id, type, value, onChange}: DieSelectorProps) {
 
     return <div className="dice">
         <Btn onClick={inc}>+</Btn>
-        <img src={"/img/dice/" + type.image} />
+        <img src={"/img/dice/" + type.image} alt={type.name} />
         <Btn onClick={dec}>-</Btn>
-        <input type="text" value={value} onChange={set} style={{color: type.color}} />
+        <input type="text" value={value} onChange={set} title={type.name} style={{color: type.color}} />
     </div>;
 }
 

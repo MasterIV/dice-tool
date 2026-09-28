@@ -5,7 +5,6 @@ export interface DiceResult {
     image: string;
 }
 
-
 export interface DiceSymbol {
     name: string;
     images: string[];
@@ -20,4 +19,12 @@ export interface DiceType {
     symbols: DiceSymbol[];
     variant: number;
     color: string;
+}
+
+export interface RollResult {
+    id: string;
+    dice: DiceType;
+    symbol?: DiceSymbol;
+    exploded?: boolean;
+    selected?: boolean;
 }
