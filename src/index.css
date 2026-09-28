@@ -16,6 +16,14 @@ body {
     border-radius: 1vw;
 }
 
+.box {
+    margin: 5%;
+    background: rgba(255,255,255,.15);
+    border-radius: 1vw;
+    padding: 2vw;
+    text-align: center;
+}
+
 .summary > div {
     position: relative;
     width: 10%;

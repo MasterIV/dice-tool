@@ -17,9 +17,9 @@ function DieSelector({id, type, value, onChange}: DieSelectorProps) {
 
     return <div className="dice">
         <Btn onClick={inc}>+</Btn>
-        <img src={"img/dice/" + type.image} />
+        <img src={"/img/dice/" + type.image} />
         <Btn onClick={dec}>-</Btn>
-        <input type="text" value={value} onBlur={set} style={{color: type.color}} />
+        <input type="text" value={value} onChange={set} style={{color: type.color}} />
     </div>;
 }
 
@@ -36,7 +36,7 @@ export default function DicePool({dice, selection, onChange}: DicePoolProps) {
             type={dice[id]}
             id={id}
             key={id}
-            value={selection[id]}
+            value={selection[id]|0}
             onChange={onChange} />)}
     </div>;
 }
