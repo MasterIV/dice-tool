@@ -17,7 +17,7 @@ function summarize(result: RollResult[]) {
         });
     });
 
-    return summary;
+    return Object.values(summary);
 }
 
 interface IconProps {
@@ -41,7 +41,7 @@ interface SummaryProps {
 export default function RollSummary({result, features = []}: SummaryProps) {
     const summary = summarize(features.includes("result_selection") ? result.filter(r => r.selected) : result);
 
-    return <div className="summary">
+    return summary.length ? <div className="summary">
         {Object.values(summary).map(({symbol, count}) => <Icon key={symbol.key} symbol={symbol} value={count}/>)}
-    </div>;
+    </div> : null;
 }

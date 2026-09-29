@@ -88,7 +88,7 @@ export default function Compact({}: CompactProps) {
         <DicePool dice={system.dice} selection={pool} onChange={changePool} />
         <Buttons onRoll={() => onRoll(pool)} onReset={resetPool} total={total} />
         <Result result={result} onSelect={selectDie} features={system.features} />
-        {result.length > 0 && <RollSummary result={result} features={system.features} />}
+        <RollSummary result={result} features={system.features} />
         {result.length > 0 && <Reroll picked={picked} onReroll={onReroll} features={system.features} />}
     </>;
 }
