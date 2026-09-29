@@ -113,9 +113,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     standard: {
         name: "Standard dice",
         image: "d20_green.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.success_explode,
             symbols.success,
@@ -129,9 +127,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     insight: {
         name: "Insight dice",
         image: "d20_blue.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.moon_explode,
             symbols.anxiety_regen,
@@ -148,9 +144,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     reckless: {
         name: "Reckless dice",
         image: "d20_red.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.success_explode,
             symbols.success_anxiety,
@@ -166,9 +160,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     defense: {
         name: "Defense dice",
         image: "d20_brown.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.success,
             symbols.success,

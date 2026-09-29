@@ -14,8 +14,9 @@ function Die({result, onSelect}: DieProps) {
     return <div className={classes} onClick={() => onSelect(result.id)}>
         <img src={"/img/dice/" + result.dice.image} alt={result.dice.name} />
         {result.symbol && <div className="symbol">
-            <img src={"/img/symbols/" + result.symbol.images[result.dice.variant]}
-                 alt={result.symbol.name} title={result.symbol.name} />
+            <img src={"/img/symbols/" + result.symbol.images[result.dice.variant ?? 0]}
+                 alt={result.symbol.name} title={result.symbol.name}
+                 style={{width: result.dice.scale}} />
         </div>}
     </div>;
 }

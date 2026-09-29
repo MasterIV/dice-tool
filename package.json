@@ -3,9 +3,13 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "http://localhost:3080",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
+    "build": "npm run build-frontend && npm run build-server",
+    "build-server": "npx esbuild src/server.ts --bundle --outfile=dist/server.cjs --format=cjs --platform=node --tsconfig=tsconfig.server.json",
+    "build-frontend": "tsc -b && vite build",
+    "server": "tsx --tsconfig tsconfig.server.json src/server.ts",
     "lint": "oxlint",
     "preview": "vite preview"
   },
@@ -30,6 +34,7 @@
     "@types/uuid": "^10.0.0",
     "@vitejs/plugin-react": "^6.1.1",
     "oxlint": "^1.81.0",
+    "tsx": "^4.23.15",
     "typescript": "~6.0.2",
     "vite": "^8.3.0"
   }

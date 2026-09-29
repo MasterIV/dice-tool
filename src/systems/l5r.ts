@@ -73,6 +73,7 @@ export const dice: Record<DiceKeys, DiceType> = {
         color: "white",
         sides: 6,
         variant: 0,
+        scale: "65%",
         symbols: [
             symbols.success,
             symbols.success_strife,
@@ -87,6 +88,7 @@ export const dice: Record<DiceKeys, DiceType> = {
         color: "black",
         sides: 12,
         variant: 1,
+        scale: "50%",
         symbols: [
             symbols.success,
             symbols.success,

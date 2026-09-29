@@ -17,8 +17,9 @@ export interface DiceType {
     sides: number;
     image: string;
     symbols: DiceSymbol[];
-    variant: number;
-    color: string;
+    variant?: number;
+    color?: string;
+    scale?: string;
 }
 
 export interface RollResult {

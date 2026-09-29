@@ -124,9 +124,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     default: {
         name: "Standard dice",
         image: "d20_blue.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.success_explosive,
             symbols.success_explosive,
@@ -145,9 +143,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     aptitude: {
         name: "Aptitude dice",
         image: "d20_green.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.success,
             symbols.success,
@@ -161,9 +157,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     expertise: {
         name: "Expertise dice",
         image: "d20_yellow.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.success_trigger,
             symbols.success_trigger,
@@ -181,9 +175,7 @@ export const dice: Record<DiceKeys, DiceType> = {
     injury: {
         name: "Standard dice",
         image: "d20_black.png",
-        color: "white",
         sides: 20,
-        variant: 0,
         symbols: [
             symbols.wound,
             symbols.wound,
