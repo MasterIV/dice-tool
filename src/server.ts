@@ -21,11 +21,11 @@ const server = http.createServer(app);
 const io = new Server<ClientEvents, ServerEvents, DefaultEventsMap, SocketData>(server);
 const port = 3080;
 
-app.use(express.static(path.join(_dirname, '..', 'frontend')));
+app.use(express.static(path.join(_dirname, 'frontend')));
 app.use(express.json());
 
 app.get(/\w*/, function (_: Request, res:Response) {
-    res.sendFile(path.join(_dirname, '..', 'frontend', 'index.html'));
+    res.sendFile(path.join(_dirname, 'frontend', 'index.html'));
 });
 
 io.on("connection", socket => {
