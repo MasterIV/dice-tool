@@ -3,7 +3,7 @@ import {dice as exovoidDice} from "./exovoid.ts";
 import {dice as l5rDice} from "./l5r.ts";
 import {dice as splimoDice} from "./splimo.ts";
 
-type Feature = "result_selection" | "complete_reroll" | "partial_reroll";
+export type Feature = "result_selection" | "complete_reroll" | "partial_reroll";
 
 export class System {
     public name: string;

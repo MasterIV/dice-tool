@@ -1,4 +1,5 @@
 import type {RollResult} from "../types/dice.ts";
+import type {Feature} from "../systems";
 
 interface DieProps {
     result: RollResult;
@@ -23,13 +24,18 @@ function Die({result, onSelect}: DieProps) {
 
 interface ResultProps {
     result: RollResult[];
-    onSelect: (id: string) => void;
+    onSelect?: (id: string) => void;
     message?: string;
+    features?: Feature[];
 }
 
-export default function Result({result, onSelect = () => {}, message}: ResultProps) {
+export default function Result({result, onSelect = () => {}, message, features=[]}: ResultProps) {
+    const showAll = !features.includes("result_selection");
+
     return result.length ? <div className="dices result">
         {message && <div className="message">{message}</div>}
-        {result.map((result) => <Die result={result} key={result.id} onSelect={onSelect} />)}
+        {result
+            .filter(result => showAll || !result.exploded || result.visible)
+            .map((result) => <Die result={result} key={result.id} onSelect={onSelect} />)}
     </div> : null;
 }

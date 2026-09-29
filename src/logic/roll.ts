@@ -2,23 +2,20 @@ import type {DiceType, RollResult} from "../types/dice.ts";
 import * as uuid from 'uuid';
 
 export function rollDie (
-    die: DiceType,
-    exploded: boolean,
+    type: string,
+    dice: DiceType,
+    exploded: string | undefined,
     callback: (r: RollResult) => void,
     subsequent?: (r: RollResult) => void,
 ) {
-    const roll = (Math.random() * die.sides) | 0;
-    const symbol = die.symbols[roll];
+    const roll = (Math.random() * dice.sides) | 0;
+    const symbol = dice.symbols[roll];
+    const id = uuid.v4();
 
-    callback({
-        id: uuid.v4(),
-        dice: die,
-        exploded,
-        symbol,
-    });
+    callback({ id, type, dice, exploded, symbol });
 
     if( symbol && symbol.exploding )
-        rollDie(die, true, subsequent || callback);
+        rollDie(type, dice, id, subsequent || callback);
 }
 
 export function rollDice (dice: Record<string, DiceType>, selection: Record<string, number>) {
@@ -26,7 +23,7 @@ export function rollDice (dice: Record<string, DiceType>, selection: Record<stri
 
     Object.keys(dice).forEach(die => {
         for(let i = 0; i < selection[die]; i++)
-            rollDie(dice[die], false, r => result.push(r));
+            rollDie(die, dice[die], undefined, r => result.push(r));
     });
 
     return result;
@@ -37,7 +34,9 @@ export const rerollDice = (roll: RollResult[]) => {
 
     result.forEach((rolled, i) => {
         if(rolled.selected)
-            rollDie(rolled.dice, false, r => result[i] = r, r => result.push(r));
+            rollDie(rolled.type, rolled.dice, rolled.exploded,
+                    r => result[i] = {...r, visible: true},
+                    r => result.push(r));
     });
 
     return result;

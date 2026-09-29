@@ -1,4 +1,4 @@
-import {type System} from "../systems";
+import {type Feature, type System} from "../systems";
 import {Link, useLoaderData} from "react-router";
 import DicePool from "../components/DicePool.tsx";
 import {useCallback, useState} from "react";
@@ -6,7 +6,7 @@ import {Typography} from "@mui/material";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import Btn from "../components/Btn.tsx";
 import type {RollResult} from "../types/dice.ts";
-import {rollDice} from "../logic/roll.ts";
+import {rerollDice, rollDice} from "../logic/roll.ts";
 import Result from "../components/Result.tsx";
 
 interface ButtonsProps {
@@ -22,6 +22,19 @@ function Buttons ({total, onRoll, onReset}: ButtonsProps) {
     </div>;
 }
 
+interface RerollProps {
+    picked: number;
+    onReroll: (partial: boolean) => void;
+    features?: Feature[];
+}
+
+function Reroll({picked, onReroll, features=[]}: RerollProps) {
+    return <div className="submit">
+        {features.includes("partial_reroll") && <Btn id="re-roll" onClick={() => onReroll(true)}>Re-Roll selected {picked} dice!</Btn>}
+        {features.includes("complete_reroll") && <Btn id="re-roll" onClick={() => onReroll(false)}>Re-Roll all dice!</Btn>}
+    </div>;
+}
+
 interface CompactProps {}
 
 export default function Compact({}: CompactProps) {
@@ -34,16 +47,36 @@ export default function Compact({}: CompactProps) {
     const changePool = useCallback((k:string, v: number) => {
         const value = Math.max(0, v|0);
         setPool(old => ({...old, [k]: value}));
-    }, [setPool])
+    }, [setPool]);
 
-    const total = Object.values(pool).reduce((a,v) => a+v, 0);
     const onRoll = useCallback((pool: Record<string, number>) => {
-        setResult(rollDice(system.dice, pool))
-    }, [pool, system, setResult])
+        setResult(rollDice(system.dice, pool));
+    }, [pool, system, setResult]);
+
+    const onReroll = useCallback((partial: boolean) => {
+        if(partial) {
+            setResult(rerollDice(result));
+        } else {
+            const rollPool: Record<string, number> = {};
+            result
+                .filter(r => !r.exploded)
+                .forEach(r => rollPool[r.type] = (rollPool[r.type]|0) + 1)
+            setResult(rollDice(system.dice, rollPool));
+        }
+    }, [system, result, setResult]);
 
     const selectDie = useCallback((id: string) => {
-        setResult(current => current.map(c => c.id == id ? {...c, selected: !c.selected} : c));
+        setResult(current => current.map(c => {
+            if(c.id === id)
+                return {...c, selected: !c.selected};
+            if(c.exploded === id)
+                return {...c, visible: true};
+            return c;
+        }));
     }, [setResult]);
+
+    const total = Object.values(pool).reduce((a,v) => a+v, 0);
+    const picked = result.filter(r => r.selected).length;
 
     return <>
         <div className="box">
@@ -53,6 +86,7 @@ export default function Compact({}: CompactProps) {
 
         <DicePool dice={system.dice} selection={pool} onChange={changePool} />
         <Buttons onRoll={() => onRoll(pool)} onReset={resetPool} total={total} />
-        <Result result={result} onSelect={selectDie} />
+        <Result result={result} onSelect={selectDie} features={system.features} />
+        {result.length > 0 && <Reroll picked={picked} onReroll={onReroll} features={system.features} />}
     </>;
 }
