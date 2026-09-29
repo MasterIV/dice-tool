@@ -10,7 +10,7 @@ export const results: Record<ResultKeys, DiceResult> = {
     trigger: {
         key: "trigger",
         name: "Trigger",
-        image: "exovoid/success.png",
+        image: "exovoid/trigger.png",
     },
     complication: {
         key: "complication",
